@@ -1,4 +1,4 @@
-import { useDirectus } from '@/lib/directus/directus';
+﻿import { useDirectus } from '@/lib/directus/directus';
 import { readItems, readItem, createItem, withToken } from '@directus/sdk';
 
 export type FeedPost = {
@@ -206,3 +206,4 @@ export async function fetchReactionSummary(postId: string) {
 
 	return summary;
 }
+
