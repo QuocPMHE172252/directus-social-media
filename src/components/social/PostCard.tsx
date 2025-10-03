@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -36,7 +36,7 @@ export function PostCard({ post }: { post: FeedPost }) {
     check();
   }, [post.authorId]);
 
-  // Thêm useEffect để fetch comment count khi component mount
+  // ThÃªm useEffect Ä‘á»ƒ fetch comment count khi component mount
   useEffect(() => {
     const fetchCommentCount = async () => {
       try {
@@ -53,7 +53,7 @@ export function PostCard({ post }: { post: FeedPost }) {
     fetchCommentCount();
   }, [post.id]);
 
-  // Fetch comments khi mở popup
+  // Fetch comments khi má»Ÿ popup
   useEffect(() => {
     if (showComments) {
       fetchComments();
@@ -70,7 +70,7 @@ export function PostCard({ post }: { post: FeedPost }) {
     } catch {}
   };
 
-  // Format thời gian
+  // Format thá»i gian
   const formatTime = (dateString: string | null | undefined) => {
     if (!dateString) return 'Just now';
     const date = new Date(dateString);
@@ -88,13 +88,13 @@ export function PostCard({ post }: { post: FeedPost }) {
     return date.toLocaleDateString();
   };
 
-  // Lấy ký tự đầu của tên để làm avatar
+  // Láº¥y kÃ½ tá»± Ä‘áº§u cá»§a tÃªn Ä‘á»ƒ lÃ m avatar
   const getInitials = (name: string | null) => {
     if (!name) return 'A';
     return name.charAt(0).toUpperCase();
   };
 
-  // Format số comment
+  // Format sá»‘ comment
   const formatCommentCount = (count: number) => {
     if (count === 0) return '0 comments';
     if (count === 1) return '1 comment';
@@ -114,13 +114,13 @@ export function PostCard({ post }: { post: FeedPost }) {
     } catch {}
   };
 
-  // Mở popup comment
+  // Má»Ÿ popup comment
   const handleCommentClick = () => {
     setShowComments(true);
     setCommentError(null);
   };
 
-  // Đóng popup comment
+  // ÄÃ³ng popup comment
   const handleCloseComments = () => {
     setShowComments(false);
     setCommentError(null);
@@ -151,10 +151,12 @@ export function PostCard({ post }: { post: FeedPost }) {
         // Optimistic: hide content
         (document.getElementById(`post-${post.id}`) as HTMLElement | null)?.remove();
       }
-    } catch {}
+    } catch {
+      // Ignore errors
+    }
   };
 
-  // Gửi comment mới
+  // Gá»­i comment má»›i
   const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newComment.trim()) return;
@@ -177,13 +179,13 @@ export function PostCard({ post }: { post: FeedPost }) {
         await handleCommentAdded();
         setCommentError(null);
       } else if (response.status === 401) {
-        setCommentError('❌ Please login to comment');
+        setCommentError('âŒ Please login to comment');
         setTimeout(() => { window.location.href = '/login'; }, 2000);
       } else {
-        setCommentError(`❌ Failed to comment: ${data.message || data.error || 'Unknown error'}`);
+        setCommentError(`âŒ Failed to comment: ${data.message || data.error || 'Unknown error'}`);
       }
     } catch (error) {
-      setCommentError(`❌ Error: ${error}`);
+      setCommentError(`âŒ Error: ${error}`);
     } finally {
       setCommentLoading(false);
     }
@@ -194,7 +196,7 @@ export function PostCard({ post }: { post: FeedPost }) {
       {/* Header */}
       <div className="flex items-center justify-between p-4 pb-2">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center shrink-0">
+          <div className="size-12 bg-blue-500 rounded-full flex items-center justify-center shrink-0">
             <span className="text-white font-semibold">
               {getInitials(post.authorName)}
             </span>
@@ -205,8 +207,8 @@ export function PostCard({ post }: { post: FeedPost }) {
             </div>
             <div className="text-xs text-gray-500 dark:text-neutral-400 flex items-center gap-1">
               <span className="truncate">{formatTime(post.createdAt ?? null)}</span>
-              <span>•</span>
-              <span>🌐</span>
+              <span>â€¢</span>
+              <span>ðŸŒ</span>
             </div>
           </div>
         </div>
@@ -232,7 +234,7 @@ export function PostCard({ post }: { post: FeedPost }) {
         )}
         {post.content && post.content.length > 200 && (
           <button onClick={() => setExpanded((v) => !v)} className="text-blue-600 text-sm hover:underline">
-            {expanded ? 'Thu gọn' : 'Xem thêm'}
+            {expanded ? 'Thu gá»n' : 'Xem thÃªm'}
           </button>
         )}
       </div>
@@ -258,17 +260,17 @@ export function PostCard({ post }: { post: FeedPost }) {
       </div>
 
       {/* Action Bar */}
-      <div className="grid grid-cols-3 divide-x border-t border-b border-gray-100 dark:border-neutral-800">
+      <div className="grid grid-cols-3 divide-x border-y border-gray-100 dark:border-neutral-800">
         <button onClick={() => {}} className="flex items-center justify-center gap-2 py-2 text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a6 6 0 016-6h6a2 2 0 012 2v8a2 2 0 01-2 2H9l-3.5 2.5A1 1 0 014 17.8V16a6 6 0 01-2-6z"/></svg>
+          <svg className="size-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a6 6 0 016-6h6a2 2 0 012 2v8a2 2 0 01-2 2H9l-3.5 2.5A1 1 0 014 17.8V16a6 6 0 01-2-6z"/></svg>
           <span className="font-medium">Like</span>
         </button>
         <button onClick={handleCommentClick} className="flex items-center justify-center gap-2 py-2 text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/></svg>
+          <svg className="size-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/></svg>
           <span className="font-medium">Comment</span>
         </button>
         <button onClick={() => {}} className="flex items-center justify-center gap-2 py-2 text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M15 8a3 3 0 11-6 0 3 3 0 016 0z"/><path fillRule="evenodd" d="M2 12.5A4.5 4.5 0 016.5 8h7A4.5 4.5 0 0118 12.5V15a1 1 0 01-1 1H3a1 1 0 01-1-1v-2.5z"/></svg>
+          <svg className="size-5" fill="currentColor" viewBox="0 0 20 20"><path d="M15 8a3 3 0 11-6 0 3 3 0 016 0z"/><path fillRule="evenodd" d="M2 12.5A4.5 4.5 0 016.5 8h7A4.5 4.5 0 0118 12.5V15a1 1 0 01-1 1H3a1 1 0 01-1-1v-2.5z"/></svg>
           <span className="font-medium">Share</span>
         </button>
       </div>
@@ -293,7 +295,7 @@ export function PostCard({ post }: { post: FeedPost }) {
         </div>
       )}
 
-      {/* Comments Modal - Tạo popup riêng */}
+      {/* Comments Modal - Táº¡o popup riÃªng */}
       {showComments && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={handleCloseComments}>
           <div className="w-full max-w-xl rounded-md bg-white dark:bg-neutral-900 dark:text-neutral-100 p-4 shadow-lg" onClick={(e) => e.stopPropagation()} >
@@ -354,3 +356,4 @@ export function PostCard({ post }: { post: FeedPost }) {
     </article>
   );
 }
+
