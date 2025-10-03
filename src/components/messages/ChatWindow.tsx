@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from 'react';
 
@@ -27,7 +27,9 @@ export function ChatWindow({ conversationId }: { conversationId: string }) {
 				setHasMore(data.length === 20);
 				if (initial) setTimeout(scrollToBottom, 0);
 			}
-		} catch {}
+		} catch {
+			// ignore pagination error
+		}
 	}
 
 	useEffect(() => {
@@ -75,3 +77,4 @@ export function ChatWindow({ conversationId }: { conversationId: string }) {
 		</div>
 	);
 } 
+

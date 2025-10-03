@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from 'react';
 import { ConversationsList } from '@/components/messages/ConversationsList';
@@ -14,7 +14,9 @@ export default function MessagesPage() {
 				const res = await fetch('/api/conversations', { cache: 'no-store' });
 				const data = await res.json();
 				if (data?.items?.length) setConversationId(data.items[0].id);
-			} catch {}
+			} catch {
+				// ignore initial load error
+			}
 		})();
 	}, []);
 
@@ -36,3 +38,4 @@ export default function MessagesPage() {
 		</div>
 	);
 } 
+

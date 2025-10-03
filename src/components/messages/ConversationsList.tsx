@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from 'react';
 
@@ -10,7 +10,9 @@ export function ConversationsList({ onSelect, selectedId }: { onSelect: (id: str
 			const res = await fetch('/api/conversations', { cache: 'no-store' });
 			const data = await res.json();
 			setItems(data?.items || []);
-		} catch {}
+		} catch {
+			// ignore load error
+		}
 	}
 
 	useEffect(() => { load(); }, []);
@@ -30,3 +32,4 @@ export function ConversationsList({ onSelect, selectedId }: { onSelect: (id: str
 		</div>
 	);
 } 
+

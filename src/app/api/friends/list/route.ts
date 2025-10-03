@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+﻿import { NextRequest } from 'next/server';
 import { useDirectus } from '@/lib/directus/directus';
 import { readItems, readUser, withToken } from '@directus/sdk';
 import { getCurrentUserId, requireUserToken } from '@/lib/auth/server';
@@ -8,7 +8,9 @@ export async function GET(_req: NextRequest) {
 	const publicToken = process.env.DIRECTUS_PUBLIC_TOKEN;
 	try {
 		let me: string | null = null;
-		try { me = await getCurrentUserId(); } catch {}
+		try { me = await getCurrentUserId(); } catch {
+			// ignore user id fetch error
+		}
 		if (publicToken) {
 			const users = (await directus.request(
 				withToken(publicToken, readItems('directus_users' as any, { fields: ['id','first_name','last_name','email'], limit: 50 } as any))
@@ -24,3 +26,4 @@ export async function GET(_req: NextRequest) {
 		return new Response(JSON.stringify([]), { status: 200, headers: { 'content-type': 'application/json' } });
 	}
 } 
+

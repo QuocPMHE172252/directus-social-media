@@ -47,7 +47,9 @@ export function PostCard({ post }: { post: FeedPost }) {
             setCommentCount(data.count);
           }
         }
-      } catch {}
+      } catch {
+        // ignore count fetch error
+      }
     };
 
     fetchCommentCount();
@@ -67,12 +69,15 @@ export function PostCard({ post }: { post: FeedPost }) {
         const data = await response.json();
         setComments(data);
       }
-    } catch {}
+    } catch {
+      // ignore comments fetch error
+    }
   };
 
   // Format thá»i gian
   const formatTime = (dateString: string | null | undefined) => {
-    if (!dateString) return 'Just now';
+    if (!dateString) 
+      return 'Just now';
     const date = new Date(dateString);
     const now = new Date();
     const diff = now.getTime() - date.getTime();
@@ -81,23 +86,33 @@ export function PostCard({ post }: { post: FeedPost }) {
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
     
-    if (minutes < 1) return 'Just now';
-    if (minutes < 60) return `${minutes}m`;
-    if (hours < 24) return `${hours}h`;
-    if (days < 7) return `${days}d`;
+    if (minutes < 1) 
+      return 'Just now';
+    if (minutes < 60) 
+      return `${minutes}m`;
+    if (hours < 24) 
+      return `${hours}h`;
+    if (days < 7) 
+      return `${days}d`;
+
     return date.toLocaleDateString();
   };
 
-  // Láº¥y kÃ½ tá»± Ä‘áº§u cá»§a tÃªn Ä‘á»ƒ lÃ m avatar
-  const getInitials = (name: string | null) => {
-    if (!name) return 'A';
+  // Get the first initial of the author name for avatar
+  const getInitials = (name: string | null | undefined) => {
+    if (!name) 
+      return 'A';
+
     return name.charAt(0).toUpperCase();
   };
 
   // Format sá»‘ comment
   const formatCommentCount = (count: number) => {
-    if (count === 0) return '0 comments';
-    if (count === 1) return '1 comment';
+    if (count === 0) 
+      return '0 comments';
+    if (count === 1) 
+      return '1 comment';
+
     return `${count} comments`;
   };
 
@@ -111,7 +126,9 @@ export function PostCard({ post }: { post: FeedPost }) {
           setCommentCount(data.count);
         }
       }
-    } catch {}
+    } catch {
+      // ignore refresh error
+    }
   };
 
   // Má»Ÿ popup comment
@@ -139,7 +156,9 @@ export function PostCard({ post }: { post: FeedPost }) {
         setDisplayContent(editContent);
         setEditing(false);
       }
-    } catch {}
+    } catch {
+      // ignore save error
+    }
   };
 
   // Delete post
@@ -207,8 +226,8 @@ export function PostCard({ post }: { post: FeedPost }) {
             </div>
             <div className="text-xs text-gray-500 dark:text-neutral-400 flex items-center gap-1">
               <span className="truncate">{formatTime(post.createdAt ?? null)}</span>
-              <span>â€¢</span>
-              <span>ðŸŒ</span>
+              <span>-</span>
+              <span>Public</span>
             </div>
           </div>
         </div>

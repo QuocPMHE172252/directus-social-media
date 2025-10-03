@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useState } from 'react';
 import { ChatWindow } from '@/components/messages/ChatWindow';
@@ -17,7 +17,9 @@ export function ChatDock() {
 					return [...prev, { key: `${data.conversationId}-${Date.now()}`, conversationId: data.conversationId }];
 				});
 			}
-		} catch {}
+		} catch {
+			// ignore start conversation error
+		}
 	}, []);
 
 	useEffect(() => {
@@ -44,3 +46,4 @@ export function ChatDock() {
 		</div>
 	);
 } 
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from 'react';
 
@@ -14,7 +14,9 @@ export function FriendsSidebar() {
 			const res = await fetch('/api/friends/list', { cache: 'no-store' });
 			const data = await res.json();
 			setUsers(data || []);
-		} catch {}
+		} catch {
+			// ignore load error
+		}
 	}
 
 	useEffect(() => { load(); }, []);
@@ -25,7 +27,9 @@ export function FriendsSidebar() {
 	}
 
 	function openChat(userId: string) {
-		try { (window as any).__openChat?.(userId); } catch {}
+		try { (window as any).__openChat?.(userId); } catch {
+			// ignore openChat error
+		}
 	}
 
 	async function addFriend(userId: string) {
@@ -69,3 +73,4 @@ export function FriendsSidebar() {
 		</aside>
 	);
 } 
+
